@@ -1,12 +1,29 @@
 <template>
 <div>
-  主页
+  <TypeNav/>
+  <ListContainer/>
+  <Recommend/>
+  <Like/>
+  <Floor/>
+  <Floor/>
 </div>
 </template>
-
 <script>
+import ListContainer from '@/pages/Home/ListContainer'
+import Recommend from '@/pages/Home/Recommend'
+import Like from '@/pages/Home/Like'
+import Floor from '@/pages/Home/Floor'
+import Brand from '@/pages/Home/Brand'
+
 export default {
-  name: "index"
+  name: "index",
+  components:{
+    ListContainer,
+    Recommend,
+    Like,
+    Floor,
+    Brand
+  }
 }
 </script>
 

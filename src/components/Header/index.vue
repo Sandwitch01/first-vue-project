@@ -43,28 +43,20 @@
 
 <script>
 export default {
-  name: "index",
+  name: "Header",
+  data(){
+    return {
+      keyword:''
+    }
+  },
   methods:{
-    data(){
-      return {
-        keyword:''
-      }
-    },
     goSearch(){
       //字符串写法
       // this.$router.push("/search/"+this.keyword+"?key="+this.keyword.toUpperCase())
       //模板字符串写法
       // this.$router.push(`/search/${this.keyword}?key=${this.keyword.toUpperCase()}`)
       //对象写法,一定要用name,不能用path
-      this.$router.push({
-        name:'search',
-        params:{
-          keyword:this.keyword
-        },
-        query:{
-          key:this.keyword.toUpperCase()
-        }
-      })
+      this.$router.push({name:'search', params:{keyword:this.keyword}, query:{key:this.keyword.toUpperCase()}})
     }
   }
 }
