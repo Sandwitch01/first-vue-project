@@ -20,5 +20,7 @@ export default {
 </script>
 
 <style>
-
+.color-red{
+  background-color: #e1251b;
+}
 </style>
