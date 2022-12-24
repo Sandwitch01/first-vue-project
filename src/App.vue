@@ -15,6 +15,13 @@ export default {
   components: {
     Header,
     Footer
+  },
+  mounted() {
+    this.$store.dispatch('Home/categoryList')
+    if (this.$route.path != '/home'){
+      this.show = false
+    }
+
   }
 }
 </script>

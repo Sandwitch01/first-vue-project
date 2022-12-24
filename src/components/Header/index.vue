@@ -56,8 +56,19 @@ export default {
       //模板字符串写法
       // this.$router.push(`/search/${this.keyword}?key=${this.keyword.toUpperCase()}`)
       //对象写法,一定要用name,不能用path
-      this.$router.push({name:'search', params:{keyword:this.keyword}, query:{key:this.keyword.toUpperCase()}})
+      let location = {name:'search', params:{keyword:this.keyword}}
+      if (this.$route.query){
+        location.query = this.$route.query
+      }
+      this.$router.push(location)
+
+    },
+    clear(){
+      this.keyword = ''
     }
+  },
+  mounted() {
+    this.$bus.$on('clear',this.clear)
   }
 }
 </script>

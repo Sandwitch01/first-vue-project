@@ -1,19 +1,35 @@
-const state = {a:1}
+import {getSearchInfo} from "@/api";
+
+const state = {
+    searchInfo:{}
+}
 
 const mutations = {
-    ADD(state){
-        state.a++
+    GETSEARCHINFO(state,searchInfo){
+        state.searchInfo = searchInfo
     }
 }
 
 const actions = {
-    add(store){
-        store.commit('ADD')
+    async getSearchInfo(context,params={}){
+
+        let result = await getSearchInfo(params);
+        if (result.code == 200){
+            context.commit("GETSEARCHINFO",result.data)
+        }
     }
 }
 
 const getters = {
-
+    goodsLis(state) {
+        return state.searchInfo.goodsList || []
+    },
+    attrsList(state){
+        return state.searchInfo.attrsList || []
+    },
+    trademarkList(state) {
+        return state.searchInfo.trademarkList || []
+    },
 }
 
 export default {
