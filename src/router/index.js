@@ -2,10 +2,7 @@ import Vue from 'vue';
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import Search from '@/pages/Search';
+import routes from "@/router/routes";
 
 let originPush = VueRouter.prototype.push
 let originReplace = VueRouter.prototype.replace
@@ -28,34 +25,9 @@ VueRouter.prototype.replace = function (location,resolve,rejected){
 }
 
 export default new VueRouter({
-    routes:[
-        {
-            path:'*',
-            redirect:'/home'
-        },
-        {
-            path:'/home',
-            component:Home,
-            meta:{
-                show:true
-            }
-        },
-        {
-            path:'/login',
-            component:Login
-        },
-        {
-            path:'/register',
-            component:Register
-        },
-        {
-            name:'search',
-            path:'/search/:keyword',
-            component:Search,
-            meta:{
-                show:true
-            }
-        },
-
-    ]
+    routes,
+    //跳转完后滚动条置顶
+    scrollBehavior(to,route,position){
+        return {y:0}
+    }
 })

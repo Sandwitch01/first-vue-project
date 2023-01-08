@@ -1,15 +1,19 @@
 <template>
   <div class="pagination">
     <button :disabled="pageNo === 1" @click="$emit('setPageNo',pageNo-1)">上一页</button>
-    <button v-if="pageStartAndEnd.start > 1" @click="$emit('setPageNo',1)">1</button>
+    <button v-if="pageStartAndEnd.start > 1" @click="$emit('setPageNo',1)" :class="{active:pageNo == 1}">1</button>
     <button v-if="pageStartAndEnd.start > 2">···</button>
 
-    <button v-if="page > pageStartAndEnd.start-1" v-for="page in pageStartAndEnd.end" @click="$emit('setPageNo',page)">
+    <button v-if="page > pageStartAndEnd.start-1"
+            v-for="page in pageStartAndEnd.end"
+            @click="$emit('setPageNo',page)"
+            :class="{active:pageNo == page}"
+    >
       {{page}}
     </button>
 
     <button v-if="pageStartAndEnd.end < totalPage-1">···</button>
-    <button v-if="pageStartAndEnd.end < totalPage" @click="$emit('setPageNo',totalPage)">{{totalPage}}</button>
+    <button v-if="pageStartAndEnd.end < totalPage" @click="$emit('setPageNo',totalPage)" :class="{active:pageNo == totalPage}">{{totalPage}}</button>
     <button :disabled="pageNo === totalPage" @click="$emit('setPageNo',pageNo+1)">下一页</button>
     <button style="margin-left: 30px">共 {{total}} 条</button>
   </div>

@@ -12,6 +12,11 @@ export const getSearchInfo = function (params={}){
     return requests({url:'/list',method:'post',data:params})
 }
 
+//获取商品详情
+export const getGoodDetail = function (skuId){
+    return requests({url:`/item/${skuId}`,method:'get'})
+}
+
 //获取轮播图
 export const getBanners = function (){
     return mockRequest({url:'/getBanners',method:'get'})
