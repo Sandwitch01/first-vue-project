@@ -1,5 +1,6 @@
 import
 {
+    addOrUpdateCart,
     getGoodDetail,
 } from '@/api'
 
@@ -12,6 +13,16 @@ const actions = {
         let result = await getGoodDetail(skuId);
         if (result.code == 200){
             context.commit('GETGOODDETAIL',result.data)
+        }
+    },
+
+    //函数用了async 就一定会返回Promise,返回值非空，就是成功,Promise.reject就是失败
+    async addOrUpdateCart(context,{skuId,skuNum}){
+        let result = await addOrUpdateCart(skuId,skuNum);
+        if (result.code == 200){
+            return "ok"
+        }else {
+            return Promise.reject(new Error("添加失败"))
         }
     }
 }
@@ -28,6 +39,9 @@ const getters = {
     },
     skuInfo(state){
         return state.goodInfo.skuInfo || {}
+    },
+    spuSaleAttrList({goodInfo}){
+        return goodInfo.spuSaleAttrList || []
     }
 }
 

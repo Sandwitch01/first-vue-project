@@ -17,6 +17,11 @@ export const getGoodDetail = function (skuId){
     return requests({url:`/item/${skuId}`,method:'get'})
 }
 
+//加入或修改购物车商品
+export const addOrUpdateCart = function (skuId,skuNum){
+    return requests({url:`/cart/addToCart/${skuId}/${skuNum}`,method:'post'})
+}
+
 //获取轮播图
 export const getBanners = function (){
     return mockRequest({url:'/getBanners',method:'get'})

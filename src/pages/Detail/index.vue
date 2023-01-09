@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom :skuImageList="skuImageList"/>
           <!-- 小图列表 -->
-          <ImageList :skuImageList="skuInfo.skuImageList"/>
+          <ImageList :skuImageList="skuImageList"/>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -63,39 +63,26 @@
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl>
-                <dt class="title">选择颜色</dt>
-                <dd changepirce="0" class="active">金色</dd>
-                <dd changepirce="40">银色</dd>
-                <dd changepirce="90">黑色</dd>
-              </dl>
-              <dl>
-                <dt class="title">内存容量</dt>
-                <dd changepirce="0" class="active">16G</dd>
-                <dd changepirce="300">64G</dd>
-                <dd changepirce="900">128G</dd>
-                <dd changepirce="1300">256G</dd>
-              </dl>
-              <dl>
-                <dt class="title">选择版本</dt>
-                <dd changepirce="0" class="active">公开版</dd>
-                <dd changepirce="-1000">移动版</dd>
-              </dl>
-              <dl>
-                <dt class="title">购买方式</dt>
-                <dd changepirce="0" class="active">官方标配</dd>
-                <dd changepirce="-240">优惠移动版</dd>
-                <dd changepirce="-390">电信优惠版</dd>
+              <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.id">
+                <dt class="title">{{spuSaleAttr.saleAttrName}}</dt>
+                <dd changepirce="0"
+                    v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
+                    :key="spuSaleAttrValue.id"
+                    :class="{active:spuSaleAttrValue.isChecked==1}"
+                    @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
+                >
+                  {{spuSaleAttrValue.saleAttrValueName}}
+                </dd>
               </dl>
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum">
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1? skuNum--:1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addOrUpdateShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -356,14 +343,53 @@
       ImageList,
       Zoom
     },
-
+    data(){
+      return {
+        skuNum:1
+      }
+    },
     mounted(){
       //获取商品详情
       this.$store.dispatch('getGoodDetail',this.$route.params.skuId)
     },
-
     computed:{
-      ...mapGetters(['categoryView','skuInfo'])
+      ...mapGetters(['categoryView','skuInfo','spuSaleAttrList']),
+      skuImageList(){
+        return this.skuInfo.skuImageList || []
+      }
+    },
+    methods:{
+      changeActive(saleAttr,list){
+        list.forEach(item=>{
+          if (saleAttr.id == item.id){
+            item.isChecked = 1
+          }else {
+            item.isChecked = 0
+          }
+        })
+      },
+      changeSkuNum(e){
+        let value = e.target.value * 1
+        if (isNaN(value) || value < 1){
+          this.skuNum = 1
+        }else {
+          this.skuNum = parseInt(value)
+        }
+      },
+
+      async addOrUpdateShopCart(){
+        let param = {
+          skuId:this.$route.params.skuId,
+          skuNum:this.skuNum
+        }
+        try {
+          await this.$store.dispatch('addOrUpdateCart',param)
+          console.log('添加成功')
+          await this.$router.push({name: 'addCartSuccess'})
+        }catch (error){
+          alert(error.message)
+        }
+      }
     }
   }
 </script>

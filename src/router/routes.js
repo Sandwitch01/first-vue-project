@@ -3,6 +3,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Search from "@/pages/Search";
 import Detail from "@/pages/Detail";
+import AddCartSuccess from "@/pages/AddCartSuccess";
 
 export default [
     {
@@ -13,7 +14,7 @@ export default [
         path:'/home',
         component:Home,
         meta:{
-            show:true
+            show:true//是否显示底部信息
         }
     },
     {
@@ -39,6 +40,12 @@ export default [
         meta:{
             show:true
         }
+    },,
+    {
+        name:'addCartSuccess',
+        path:'/addCartSuccess',
+        component:AddCartSuccess,
+        meta:{show:true}
     },
 
 ]
