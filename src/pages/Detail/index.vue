@@ -385,7 +385,8 @@
         try {
           await this.$store.dispatch('addOrUpdateCart',param)
           console.log('添加成功')
-          await this.$router.push({name: 'addCartSuccess'})
+          sessionStorage.setItem('skuInfo',JSON.stringify(this.skuInfo))
+          this.$router.push({name: 'addCartSuccess'});
         }catch (error){
           alert(error.message)
         }

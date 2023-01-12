@@ -22,6 +22,11 @@ export const addOrUpdateCart = function (skuId,skuNum){
     return requests({url:`/cart/addToCart/${skuId}/${skuNum}`,method:'post'})
 }
 
+//获取购物车列表
+export const getCartList = function (){
+    return requests({url:'/cart/cartList',method:'get'})
+}
+
 //获取轮播图
 export const getBanners = function (){
     return mockRequest({url:'/getBanners',method:'get'})

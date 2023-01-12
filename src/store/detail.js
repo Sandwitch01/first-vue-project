@@ -2,10 +2,12 @@ import
 {
     addOrUpdateCart,
     getGoodDetail,
+    getCartList
 } from '@/api'
-
+import { getUUid } from "@/utils/getUUid";
 const state = {
-    goodInfo:{}
+    goodInfo:{},
+    uuid_token:getUUid()
 }
 
 const actions = {
@@ -24,6 +26,11 @@ const actions = {
         }else {
             return Promise.reject(new Error("添加失败"))
         }
+    },
+
+    async getCartList(){
+       let result =  await getCartList()
+        console.log(result)
     }
 }
 
