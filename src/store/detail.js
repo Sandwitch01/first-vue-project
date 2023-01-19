@@ -1,8 +1,7 @@
 import
 {
     addOrUpdateCart,
-    getGoodDetail,
-    getCartList
+    getGoodDetail
 } from '@/api'
 import { getUUid } from "@/utils/getUUid";
 const state = {
@@ -28,10 +27,6 @@ const actions = {
         }
     },
 
-    async getCartList(){
-       let result =  await getCartList()
-        console.log(result)
-    }
 }
 
 const mutations = {
